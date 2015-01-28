@@ -4,4 +4,4 @@ allow system_server touch_key_sysfs:file rw_file_perms;
 allow system_server touch_key_sysfs:dir rw_dir_perms;
 allow system_server io_device:chr_file rw_file_perms;
 allow system_server efs_file:dir search;
-
+allow system_server efs_file:file read;
