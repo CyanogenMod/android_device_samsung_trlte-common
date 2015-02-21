@@ -8,7 +8,7 @@
     "target_path": "device/samsung/qcom-common"
   },
   {
-    "repository": "android_kernel_samsung_trlte",
-    "target_path": "kernel/samsung/trlte"
+    "repository": "android_kernel_samsung_lentislte",
+    "target_path": "kernel/samsung/lentislte"
   }
 ]
