@@ -17,7 +17,7 @@
 $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 
 # Get non-open-source specific aspects
-$(call inherit-product-if-exists, vendor/samsung/trlte-common/trlte-common-vendor.mk)
+$(call inherit-product-if-exists, vendor/samsung/lentislte-common/lentislte-common-vendor.mk)
 
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
@@ -72,7 +72,7 @@ PRODUCT_COPY_FILES += \
 
 # GPS configuration
 PRODUCT_COPY_FILES += \
-    device/samsung/trlte-common/configs/gps.conf:system/etc/gps.conf
+    device/samsung/lentislte-common/configs/gps.conf:system/etc/gps.conf
 
 # GPS
 PRODUCT_PACKAGES += \
