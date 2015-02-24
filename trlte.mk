@@ -95,7 +95,7 @@ PRODUCT_PACKAGES += \
     tinymix
 
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.audio.monitorRotation=true
+    ro.audio.monitorRotation=false
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/audio/audio_effects.conf:system/vendor/etc/audio_effects.conf \
