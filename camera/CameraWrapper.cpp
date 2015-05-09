@@ -115,14 +115,9 @@ static char *camera_fixup_getparams(int __attribute__((unused)) id,
     params.dump();
 #endif
 
-#ifndef FIXUP_PREVIEW
     if (id == 0 && is4k(params)) {
         params.set("preview-format", "yuv420sp");
     }
-#else
-    params.set("preview-format", "yuv420sp");
-    params.set("video-frame-format", "yuv420sp");
-#endif
 
     /* If the vendor has HFR values but doesn't also expose that
      * this can be turned off, fixup the params to tell the Camera
@@ -157,21 +152,15 @@ static char *camera_fixup_setparams(int id, const char *settings)
     params.dump();
 #endif
 
-#ifdef FIXUP_PREVIEW
-    params.set("video-frame-format", "yuv420sp");
-    params.setPreviewFormat("nv12-venus");
-
-    const char *recordingHint = params.get(android::CameraParameters::KEY_RECORDING_HINT);
-    bool isVideo = recordingHint && !strcmp(recordingHint, "true");
-
-    if (isVideo) {
-        params.set(android::CameraParameters::KEY_DIS, android::CameraParameters::DIS_DISABLE);
-        params.set(android::CameraParameters::KEY_ZSL, android::CameraParameters::ZSL_OFF);
+    if (is4k(params)) {
+        /* Use nv12-venus for performance reasons */
+        params.setPreviewFormat("nv12-venus");
     } else {
-        params.set(android::CameraParameters::KEY_ZSL, android::CameraParameters::ZSL_ON);
+        params.setPreviewFormat("yuv420sp");
     }
-#endif
-
+    if (id == 1) {
+        params.set("preview-size", "1920x1080");
+    }
     android::String8 strParams = params.flatten();
 
     if (fixed_set_params[id])
@@ -310,7 +299,6 @@ static int camera_start_recording(struct camera_device *device)
     if (!device)
         return EINVAL;
 
-#ifndef FIXUP_PREVIEW
     android::CameraParameters parameters;
     parameters.unflatten(android::String8(camera_get_parameters(device)));
     parameters.set("dis", "disable");
@@ -320,12 +308,12 @@ static int camera_start_recording(struct camera_device *device)
     } else if (CAMERA_ID(device) == 0 && !is4k(parameters)) {
         parameters.set("preview-size", "1920x1080");
     }
+
     camera_set_parameters(device, strdup(parameters.flatten().string()));
 
     android::CameraParameters parameters2;
     parameters2.unflatten(android::String8(VENDOR_CALL(device, get_parameters)));
     parameters2.dump();
-#endif
 
     return VENDOR_CALL(device, start_recording);
 }
