@@ -199,9 +199,10 @@ PRODUCT_PACKAGES += \
     init.sec.boot.sh \
     ueventd.qcom.rc
 
-# Torch
+# Torch & Misc
 PRODUCT_PACKAGES += \
-    Torch
+    Torch \
+    TrlteDoze
 
 PRODUCT_PACKAGES += \
     libnetcmdiface \
