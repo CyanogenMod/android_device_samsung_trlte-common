@@ -4,6 +4,9 @@ vendor/lib/libacdbrtac.so
 vendor/lib/libadiertac.so
 vendor/lib/libaudcal.so
 lib/libcsd-client.so
+lib/libdetectmodem.so
+lib/libmysound.so
+lib/libssaudio-client.so
 etc/firmware/audience-es705-fw.bin
 etc/firmware/audience-es705-vs.bin
 etc/Bluetooth_cal.acdb
@@ -21,10 +24,6 @@ vendor/lib/libfastcvadsp_stub.so
 vendor/lib/libfastcvopt.so
 vendor/lib/libscve.so
 vendor/lib/libscve_stub.so
-
-# Audio
-lib/libdetectmodem.so
-lib/libssaudio-client.so
 
 # Camera
 bin/mm-qcamera-daemon
