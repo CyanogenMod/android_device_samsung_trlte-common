@@ -28,8 +28,6 @@ TARGET_CPU_ABI2 := armeabi
 
 ENABLE_CPUSETS := true
 
-ENABLE_CPUSETS := true
-
 # Audio
 BOARD_USES_ALSA_AUDIO := true
 AUDIO_FEATURE_ENABLED_HWDEP_CAL := true
@@ -72,9 +70,6 @@ USE_OPENGL_RENDERER := true
 
 # Include path
 TARGET_SPECIFIC_HEADER_PATH := $(LOCAL_PATH)/include
-
-# Sensors, taken from http://review.cyanogenmod.org/#/c/124083/, to make some lollipop blobs work (basically SENSOR_TYPE_HEART_RATE sensor).
-TARGET_NO_SENSOR_PERMISSION_CHECK := true
 
 # Kernel
 BOARD_KERNEL_BASE := 0x00000000
