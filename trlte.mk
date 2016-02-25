@@ -107,6 +107,10 @@ PRODUCT_PACKAGES += \
     libxml2 \
     camera.apq8084 \
     Snap
+    
+# Charger
+PRODUCT_PACKAGES += \		
+    charger_res_images		
 
 # Display
 PRODUCT_PACKAGES += \
@@ -221,6 +225,7 @@ PRODUCT_PACKAGES += \
     fstab.qcom \
     init.crda.sh \
     init.qcom.rc \
+    init.qcom.power.rc \
     init.qcom.usb.rc \
     init.qcom.usb.sh \
     init.sec.boot.sh \
