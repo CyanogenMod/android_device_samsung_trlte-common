@@ -10,5 +10,13 @@
   {
     "repository": "android_kernel_samsung_trlte",
     "target_path": "kernel/samsung/trlte"
+  },
+  {
+    "repository": "android_external_stlport",
+    "target_path": "external/stlport"
+  },
+  {
+    "repository": "android_external_connectivity",
+    "target_path": "external/connectivity"
   }
 ]

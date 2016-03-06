@@ -21,19 +21,23 @@ LOCAL_PATH := device/samsung/trlte-common
 
 # Architecture
 TARGET_CPU_VARIANT := krait
+TARGET_ARCH := arm
+TARGET_ARCH_VARIANT := armv7-a-neon
+TARGET_CPU_ABI := armeabi-v7a
+TARGET_CPU_ABI2 := armeabi
 
 # Audio
 BOARD_USES_ALSA_AUDIO := true
 AUDIO_FEATURE_ENABLED_HWDEP_CAL := true
-AUDIO_FEATURE_LOW_LATENCY_PRIMARY := true
+AUDIO_USE_LL_AS_PRIMARY := true
 BOARD_USES_ES705 := true
 TARGET_HAVE_DYN_A2DP_SAMPLERATE := true
 
 # Bluetooth
+BOARD_HAVE_BLUETOOTH_BCM := true
 BOARD_BLUEDROID_VENDOR_CONF := $(LOCAL_PATH)/bluetooth/vnd_trlte.txt
 BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(LOCAL_PATH)/bluetooth
 BOARD_BLUETOOTH_USES_HCIATTACH_PROPERTY := false
-BOARD_HAVE_BLUETOOTH_BCM := true
 
 # Bootloader
 TARGET_BOOTLOADER_BOARD_NAME := APQ8084
@@ -44,12 +48,14 @@ USE_DEVICE_SPECIFIC_CAMERA := true
 COMMON_GLOBAL_CFLAGS += -DSAMSUNG_CAMERA_HARDWARE
 
 # Charger
-BOARD_BATTERY_DEVICE_NAME := "battery"
-BOARD_CHARGING_CMDLINE_NAME := "androidboot.mode"
-BOARD_CHARGING_CMDLINE_VALUE := "charger"
+BOARD_CHARGER_DISABLE_INIT_BLANK := true
+#BOARD_BATTERY_DEVICE_NAME := "battery"
+#BOARD_CHARGING_CMDLINE_NAME := "androidboot.mode"
+#BOARD_CHARGING_CMDLINE_VALUE := "charger"
+#BOARD_CHARGER_ENABLE_SUSPEND := true
+#BOARD_CHARGER_SHOW_PERCENTAGE := true
 
 # CMHW
-BOARD_HARDWARE_CLASS += hardware/samsung/cmhw
 BOARD_HARDWARE_CLASS += device/samsung/trlte-common/cmhw
 
 # Display
@@ -64,12 +70,14 @@ USE_OPENGL_RENDERER := true
 TARGET_SPECIFIC_HEADER_PATH := $(LOCAL_PATH)/include
 
 # Kernel
-BOARD_CUSTOM_BOOTIMG_MK := $(LOCAL_PATH)/mkbootimg.mk
 BOARD_KERNEL_BASE := 0x00000000
 BOARD_KERNEL_CMDLINE := console=null androidboot.hardware=qcom user_debug=31 msm_rtb.filter=0x37 dwc3_msm.cpu_to_affin=1
 BOARD_KERNEL_PAGESIZE := 4096
 BOARD_KERNEL_SEPARATED_DT := true
-BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x02600000 --tags_offset 0x02400000 --second_offset 0x00f00000
+BOARD_RAMDISK_OFFSET     := 0x02600000
+BOARD_KERNEL_TAGS_OFFSET := 0x02400000
+BOARD_SECOND_OFFSET      := 0x00f00000
+TARGET_KERNEL_ARCH := arm
 TARGET_KERNEL_CONFIG := apq8084_sec_defconfig
 TARGET_KERNEL_SELINUX_CONFIG := selinux_defconfig
 TARGET_KERNEL_SOURCE := kernel/samsung/trlte
@@ -83,7 +91,9 @@ TARGET_ENABLE_QC_AV_ENHANCEMENTS := true
 # Partitions
 BOARD_FLASH_BLOCK_SIZE := 262144
 TARGET_USERIMAGES_USE_EXT4 := true
+TARGET_USERIMAGES_USE_F2FS := true
 BOARD_BOOTIMAGE_PARTITION_SIZE := 17825792
+BOARD_CACHEIMAGE_PARTITION_SIZE := 524288000
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 19922944
 BOARD_SYSTEMIMAGE_PARTITION_SIZE := 3984588800
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 26558312448
@@ -91,8 +101,14 @@ BOARD_USERDATAIMAGE_PARTITION_SIZE := 26558312448
 # Platform
 TARGET_BOARD_PLATFORM := apq8084
 TARGET_BOARD_PLATFORM_GPU := qcom-adreno420
+USE_CLANG_PLATFORM_BUILD := true
 
-# Power HAL not specified, we're using the one in trlte-common instead.
+# Power HAL
+TARGET_POWERHAL_VARIANT := qcom
+TARGET_POWERHAL_SET_INTERACTIVE_EXT := $(LOCAL_PATH)/power/power_ext.c
+
+# Data services
+USE_DEVICE_SPECIFIC_DATASERVICES := true
 
 # Qualcomm support
 COMMON_GLOBAL_CFLAGS += -DQCOM_BSP
@@ -114,32 +130,11 @@ include device/qcom/sepolicy/sepolicy.mk
 BOARD_SEPOLICY_DIRS += \
     device/samsung/trlte-common/sepolicy
 
-BOARD_SEPOLICY_UNION += \
-    bluetooth.te \
-    device.te \
-    file.te \
-    file_contexts \
-    genfs_contexts \
-    kernel.te \
-    lcd_dev.te \
-    macloader.te \
-    mediaserver.te \
-    mdm_helper.te \
-    mm-qcamerad.te \
-    mpdecision.te \
-    platform_app.te \
-    rild.te \
-    system_app.te \
-    system_server.te \
-    tee.te \
-    time_daemon.te \
-    ueventd.te \
-    wpa.te \
-    vibe_dev.te \
-    vold.te
-
 # Time
 BOARD_USES_QC_TIME_SERVICES := true
+
+# Sensors
+TARGET_NO_SENSOR_PERMISSION_CHECK := true
 
 # Wifi
 BOARD_HAVE_SAMSUNG_WIFI := true
@@ -171,3 +166,4 @@ ifeq ($(HOST_OS),linux)
   endif
 endif
 
+TARGET_USES_BLOCK_BASED_OTA := false
